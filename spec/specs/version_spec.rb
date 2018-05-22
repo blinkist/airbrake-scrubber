@@ -12,7 +12,7 @@ describe Blinkist::Airbrake::Scrubber::VERSION do
 
   it 'equals 1.0.1 for auto-check purposes' do
     version = Blinkist::Airbrake::Scrubber::VERSION
-    expect(version).to eq '1.0.1'
+    expect(version).to eq '1.1.0'
   end
 
 end
