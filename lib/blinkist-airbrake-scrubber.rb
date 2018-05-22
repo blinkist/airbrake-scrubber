@@ -11,19 +11,23 @@ module Airbrake
 end
 
 # Set up the namespace and run every scrubber listed in SCRUBBERS
-module Blinkist::Airbrake::Scrubber
-  FILTERED  = '[Filtered]'
-  SCRUBBERS = [ MessageEmail ]
+module Blinkist
+  module Airbrake
+    module Scrubber
+      FILTERED  = '[Filtered]'
+      SCRUBBERS = [ MessageEmail ]
 
-  # Override original Airbrake.configure
-  def configure(*args, &block)
-    super
-  ensure
-    Blinkist::Airbrake::Scrubber.run!
-  end
+      # Override original Airbrake.configure
+      def configure(*args, &block)
+        super
+      ensure
+        Blinkist::Airbrake::Scrubber.run!
+      end
 
-  # Run scrubbers
-  def self.run!
-    SCRUBBERS.each { |scrubber| scrubber::scrub! }
+      # Run scrubbers
+      def self.run!
+        SCRUBBERS.each { |scrubber| scrubber::scrub! }
+      end
+    end
   end
 end
