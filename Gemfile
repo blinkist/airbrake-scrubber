@@ -13,6 +13,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'awesome_print'
   gem "byebug"
   gem 'memory_profiler'
   gem "ruby-prof"
