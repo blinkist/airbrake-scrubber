@@ -4,12 +4,12 @@ Dir[File.expand_path('../../lib/**/*.rb', __FILE__)].each do |f|
 end
 
 # Prepend the original Airbrake module
-module AirbrakeScrubber
+module Blinkist::Airbrake
   prepend Airbrake
 
   class << self
     def configure(notifier = :default, &block)
-      super notifier, &block
+      Airbrake.configure notifier, &block
       Blinkist::Airbrake::Scrubber.run!
     end
   end
@@ -19,11 +19,11 @@ end
 module Blinkist
   module Airbrake
     module Scrubber
+      FILTERED  = '[Filtered]'
       SCRUBBERS = [ MessageEmail ]
-      FILTERED = '[Filtered]'
 
       def self.run!
-        SCRUBBERS.each   { |scrubber| self.const_get(scrubber)::scrub! }
+        SCRUBBERS.each   { |scrubber| scrubber::scrub! }
       end
 
     end
