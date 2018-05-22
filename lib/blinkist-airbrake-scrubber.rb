@@ -3,29 +3,25 @@ Dir[File.expand_path('../../lib/**/*.rb', __FILE__)].each do |f|
   require f
 end
 
-# Override the original Airbrake module to piggy-back on the .configure method
-module Airbrake
-  class << self
-    def overriden_configure(notifier = :default, &block)
-      old_configure notifier, &block
-      Blinkist::Airbrake::Scrubber.run!
-    end
+# Prepend the original Airbrake module
+module AirbrakeScrubber
+  prepend Airbrake
 
-    alias old_configure configure
-    alias configure overriden_configure
+  def configure(notifier = :default, &block)
+    super notifier, &block
+    Blinkist::Airbrake::Scrubber.run!
   end
 end
 
-# Set up the namespace and run everything class from Blinkist::Airbrake::Scrubber automatically
+# Set up the namespace and run every scrubber listed in SCRUBBERS
 module Blinkist
   module Airbrake
     module Scrubber
+      SCRUBBERS = [ MessageEmail ]
       FILTERED = '[Filtered]'
 
       def self.run!
-        self.constants
-          .select { |const| self.const_get(const).is_a? Class}
-          .each   { |klass| self.const_get(klass)::scrub! }
+        SCRUBBERS.each   { |scrubber| self.const_get(scrubber)::scrub! }
       end
 
     end
