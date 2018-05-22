@@ -10,7 +10,8 @@ Gem::Specification.new do |gem|
   gem.email         = ["pawel@blinkist.com", "dinesh@blinkist.com"]
   gem.description   = %q{Email scrubbing configuration for Airbrake at Blinkist}
   gem.summary       = %q{With this, Airbrake will not leak emails via exception notifications}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/blinkist/blinkist-airbrake-scrubber"
+  gem.license       = "MIT"
 
   # Airbrake
   gem.add_dependency "airbrake", "~> 5"
