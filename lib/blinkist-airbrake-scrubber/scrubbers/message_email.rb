@@ -1,12 +1,16 @@
-module Blinkist::Airbrake::Scrubber
-  class MessageEmail
-    REGEXP = /[\S]+@[\S]+/i
+module Blinkist
+  module Airbrake
+    module Scrubber
+      class MessageEmail
+        REGEXP = /[\S]+@[\S]+/i
 
-    def self.scrub!
-      ::Airbrake.add_filter do |notice|
-        notice[:errors].each { |error| error[:message].gsub!(REGEXP, FILTERED) }
+        def self.scrub!
+          ::Airbrake.add_filter do |notice|
+            notice[:errors].each { |error| error[:message].gsub!(REGEXP, FILTERED) }
+          end
+        end # def self.scrub!
+
       end
-    end # def self.scrub!
-
+    end
   end
 end
