@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'blinkist-airbrake-scrubber/scrubbers/message_email'
 
 describe Blinkist::Airbrake::Scrubber::MessageEmail do
 
