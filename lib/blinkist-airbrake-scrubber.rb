@@ -7,9 +7,11 @@ end
 module AirbrakeScrubber
   prepend Airbrake
 
-  def configure(notifier = :default, &block)
-    super notifier, &block
-    Blinkist::Airbrake::Scrubber.run!
+  class << self
+    def configure(notifier = :default, &block)
+      super notifier, &block
+      Blinkist::Airbrake::Scrubber.run!
+    end
   end
 end
 
