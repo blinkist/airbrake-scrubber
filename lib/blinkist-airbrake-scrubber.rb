@@ -4,28 +4,26 @@ Dir[File.expand_path('../../lib/**/*.rb', __FILE__)].each do |f|
 end
 
 # Prepend the original Airbrake module
-module Blinkist::Airbrake
-  prepend Airbrake
-
+module Airbrake
   class << self
-    def configure(notifier = :default, &block)
-      Airbrake.configure notifier, &block
-      Blinkist::Airbrake::Scrubber.run!
-    end
+    prepend Blinkist::Airbrake::Scrubber
   end
 end
 
 # Set up the namespace and run every scrubber listed in SCRUBBERS
-module Blinkist
-  module Airbrake
-    module Scrubber
-      FILTERED  = '[Filtered]'
-      SCRUBBERS = [ MessageEmail ]
+module Blinkist::Airbrake::Scrubber
+  FILTERED  = '[Filtered]'
+  SCRUBBERS = [ MessageEmail ]
 
-      def self.run!
-        SCRUBBERS.each   { |scrubber| scrubber::scrub! }
-      end
+  # Override original Airbrake.configure
+  def configure(*args, &block)
+    super
+  ensure
+    Blinkist::Airbrake::Scrubber.run!
+  end
 
-    end
+  # Run scrubbers
+  def self.run!
+    SCRUBBERS.each { |scrubber| scrubber::scrub! }
   end
 end
