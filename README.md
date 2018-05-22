@@ -14,6 +14,12 @@ And then execute:
 
     $ bundle install
 
+Install it with
+
+    Blinkist::Airbrake.configure do |c|
+      # Your config here
+    end
+
 ## Information
 
 ### Extending the functionality
@@ -35,6 +41,8 @@ module Blinkist::Airbrake::Scrubber
   end
 end
 ```
+
+Then, add the class to Blinkist::Airbrake::Scrubber's SCRUBBERS list.
 
 ### Applications using this gem
 
