@@ -25,6 +25,17 @@ describe Blinkist::Airbrake::Scrubber::ParamsEmail do
       notifier.instance_variable_get(:@filter_chain).refine(notice)
       expect(notice[:params][:email]).to eq(Blinkist::Airbrake::Scrubber::FILTERED)
     end
+
+    it "scrubs the deep-nested email from the params hash" do
+      notice = Airbrake[:default].build_notice(
+        Exception.new('whatever'),
+        { email: 'user@example.org', deeply: { nested: { email: 'user@example.org' } } }
+      )
+
+      notifier.instance_variable_get(:@filter_chain).refine(notice)
+      expect(notice[:params][:email]).to eq(Blinkist::Airbrake::Scrubber::FILTERED)
+      expect(notice[:params][:deeply][:nested][:email]).to eq(Blinkist::Airbrake::Scrubber::FILTERED)
+    end
   end
 
 end
