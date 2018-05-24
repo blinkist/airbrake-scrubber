@@ -5,8 +5,9 @@ module Blinkist
 
         def self.scrub!
           ::Airbrake.add_filter do |notice|
-            if notice[:params] && notice[:params][:email]
-              notice[:params][:email] = FILTERED
+            notice[:params] = notice[:params].traverse do |key, value|
+              value = FILTERED if key.to_s == 'email'
+              [ key, value ]
             end
             notice
           end
