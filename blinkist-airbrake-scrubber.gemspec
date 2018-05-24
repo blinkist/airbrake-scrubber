@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.license       = "MIT"
 
   # Airbrake
-  gem.add_dependency "airbrake"
+  gem.add_dependency "airbrake", "~> 7"
 
   gem.files         = Dir["{lib,spec}/**/*", "README.md", "Rakefile", "Gemfile", "*.gemspec"]
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
