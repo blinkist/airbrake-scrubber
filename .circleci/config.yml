@@ -83,8 +83,10 @@ workflows:
     jobs:
       - build
       - deploy:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
+        requires:
+          - build
+        filters:
+          tags:
+            only: /.*/
+          branches:
+            ignore: /.*/
