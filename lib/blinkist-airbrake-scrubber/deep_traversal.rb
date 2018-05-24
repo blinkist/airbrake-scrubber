@@ -12,14 +12,16 @@ class DeepTraversal
   private
 
   def recursive_traverse(input, &block)
-    if input.is_a? Array
+    case input
+    when Array
       input.map { |i| recursive_traverse(i, &block) }
 
-    elsif input.respond_to?(:to_hash)
+    when Hash
       Hash[input.map { |key, value|
 
         # Go deeper for things that are not simple objects
-        if value.respond_to?(:to_hash) || value.is_a?(Array)
+        case value
+        when Array, Hash
           [ key, recursive_traverse(value, &block) ]
         else
           [ key, block.call(key, value) ]
