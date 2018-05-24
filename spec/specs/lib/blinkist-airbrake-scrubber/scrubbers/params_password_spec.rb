@@ -25,6 +25,17 @@ describe Blinkist::Airbrake::Scrubber::ParamsPassword do
       notifier.instance_variable_get(:@filter_chain).refine(notice)
       expect(notice[:params][:password]).to eq(Blinkist::Airbrake::Scrubber::FILTERED)
     end
+
+    it "scrubs the deep-nested password from the params hash" do
+      notice = Airbrake[:default].build_notice(
+        Exception.new('whatever'),
+        { password: 'whatever', deeply: { nested: { password: 'whatever' } } }
+      )
+
+      notifier.instance_variable_get(:@filter_chain).refine(notice)
+      expect(notice[:params][:password]).to eq(Blinkist::Airbrake::Scrubber::FILTERED)
+      expect(notice[:params][:deeply][:nested][:password]).to eq(Blinkist::Airbrake::Scrubber::FILTERED)
+    end
   end
 
 end
