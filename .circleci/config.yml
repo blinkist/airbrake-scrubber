@@ -75,7 +75,7 @@ jobs:
           name: Publish to Rubygems
           command: |
             gem build blinkist-airbrake-scrubber.gemspec
-            gem push "blinkist-airbrake-scrubber-$(git describe --tags).gem"
+            gem push "blinkist-airbrake-scrubber-$(git describe --tags | cut -c2-).gem"
 
 workflows:
   version: 2
