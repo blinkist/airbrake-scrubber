@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'blinkist-airbrake-scrubber'
 
-describe DeepTraversal do
-  subject { DeepTraversal.new(source) }
+describe Blinkist::Airbrake::Scrubber::DeepTraversal do
+  subject { described_class.new(source) }
 
   let(:source) { Hash.new }
 
@@ -56,17 +56,17 @@ describe DeepTraversal do
 
   context "For simple objects (non-hash, non-array)" do
     it "doesn't break String" do
-      returned_object = DeepTraversal.new("Sample").traverse { |k, v| k.to_s == 'email' ? '[Filtered]' : v }
+      returned_object = described_class.new("Sample").traverse { |k, v| k.to_s == 'email' ? '[Filtered]' : v }
       expect(returned_object).to eq("Sample")
     end
 
     it "doesn't break Fixnum" do
-      returned_object = DeepTraversal.new(1).traverse { |k, v| k.to_s == 'email' ? '[Filtered]' : v }
+      returned_object = described_class.new(1).traverse { |k, v| k.to_s == 'email' ? '[Filtered]' : v }
       expect(returned_object).to eq(1)
     end
 
     it "doesn't break Float" do
-      returned_object = DeepTraversal.new(3.14).traverse { |k, v| k.to_s == 'email' ? '[Filtered]' : v }
+      returned_object = described_class.new(3.14).traverse { |k, v| k.to_s == 'email' ? '[Filtered]' : v }
       expect(returned_object).to eq(3.14)
     end
   end
