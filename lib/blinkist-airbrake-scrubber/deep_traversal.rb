@@ -1,12 +1,5 @@
 # DeepTraversal provides traverse possibility of Hashes
 # Can handle Hash objects with deep nesting, or other nested objects that can be dug deeper (e.g. Array)
-#
-# Note: Block must return [ key, value ]
-#
-# Usage:
-# new_hash = DeepTraversal.new(hash).traverse do |key, value|
-#   [ key, value.upcase ]
-# end
 class DeepTraversal
   def initialize(source)
     @source = source
