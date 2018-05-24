@@ -5,9 +5,9 @@ module Blinkist
 
         def self.scrub!
           ::Airbrake.add_filter do |notice|
-            notice[:params] = notice[:params].traverse do |key, value|
+            notice[:params] = DeepTraversal.new(notice[:params]).traverse do |key, value|
               value = FILTERED if key.to_s == 'password'
-              [ key, value ]
+              value
             end
             notice
           end
