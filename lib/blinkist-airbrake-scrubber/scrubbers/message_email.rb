@@ -6,9 +6,14 @@ module Blinkist
 
         def self.scrub!
           ::Airbrake.add_filter do |notice|
-            notice[:errors].each { |error| error[:message].gsub!(REGEXP, FILTERED) }
+            # Cannot do gsub! coz of frozen literals
+            notice[:errors].each { |error| error[:message] = scrub(error[:message]) }
           end
         end # def self.scrub!
+
+        def self.scrub(message)
+          message.gsub(REGEXP, FILTERED)
+        end
 
       end
     end

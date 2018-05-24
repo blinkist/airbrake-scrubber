@@ -23,7 +23,7 @@ describe Blinkist::Airbrake::Scrubber::MessageEmail do
 
   # It's ridiculously hard to peek into Airbrake::Notice
   # Instead verify the functionality here
-  describe "scrubber functionality" do
+  describe ".scrub" do
     let(:filtered)  { Blinkist::Airbrake::Scrubber::FILTERED }
     let(:regexp)    { described_class::REGEXP }
 
@@ -36,14 +36,14 @@ describe Blinkist::Airbrake::Scrubber::MessageEmail do
       it "filters out valid emails" do
         puts "Verifying: #{ valid_emails.join ', ' }"
         valid_emails.each do |email|
-          expect(email.gsub(regexp, filtered)).to eq(filtered)
+          expect(described_class.scrub(email)).to eq(filtered)
         end
       end
 
       it "filters out invalid emails" do
         puts "Verifying: #{ invalid_emails.join ', ' }"
         invalid_emails.each do |email|
-          expect(email.gsub(regexp, filtered)).to eq(filtered)
+          expect(described_class.scrub(email)).to eq(filtered)
         end
       end
     end
@@ -55,7 +55,7 @@ describe Blinkist::Airbrake::Scrubber::MessageEmail do
         puts "Verifying: #{ valid_emails.join ', ' }"
         valid_emails.each do |email|
           content = text.gsub('EMAIL', email)
-          expect(content.gsub(regexp, filtered)).to eq(text.gsub('EMAIL', filtered))
+          expect(described_class.scrub(content)).to eq(text.gsub('EMAIL', filtered))
         end
       end
 
@@ -63,8 +63,17 @@ describe Blinkist::Airbrake::Scrubber::MessageEmail do
         puts "Verifying: #{ invalid_emails.join ', ' }"
         invalid_emails.each do |email|
           content = text.gsub('EMAIL', email)
-          expect(content.gsub(regexp, filtered)).to eq(text.gsub('EMAIL', filtered))
+          expect(described_class.scrub(content)).to eq(text.gsub('EMAIL', filtered))
         end
+      end
+    end
+
+    context "Anything that is a frozen string" do
+      subject { described_class.scrub text }
+      let(:text) { "Error bla bla bla test@example.org bla bla bla".freeze }
+
+      it "filters out email" do
+        expect(subject).to eq(text.gsub('test@example.org', filtered))
       end
     end
   end
