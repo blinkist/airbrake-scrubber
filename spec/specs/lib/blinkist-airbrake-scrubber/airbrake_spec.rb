@@ -10,14 +10,14 @@ describe Airbrake do
   }
 
   describe "Module#prepend" do
-    it "does have Blinkist::Airbrake::Scrubber as one of the ancestors" do
-      expect(described_class.ancestors).to include(Blinkist::Airbrake::Scrubber)
+    it "does have Blinkist::AirbrakeScrubber as one of the ancestors" do
+      expect(described_class.ancestors).to include(Blinkist::AirbrakeScrubber)
     end
   end
 
   describe '.configure' do
-    it "does call Blinkist::Airbrake::Scrubber.configure" do
-      expect_any_instance_of(Blinkist::Airbrake::Scrubber).to receive(:configure)
+    it "does call Blinkist::AirbrakeScrubber.configure" do
+      expect_any_instance_of(Blinkist::AirbrakeScrubber).to receive(:configure)
       instantiate_airbrake
     end
   end

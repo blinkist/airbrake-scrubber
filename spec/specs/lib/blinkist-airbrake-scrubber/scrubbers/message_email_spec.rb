@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Blinkist::Airbrake::Scrubber::MessageEmail do
+describe Blinkist::AirbrakeScrubber::MessageEmail do
 
   describe "Structure" do
     it "has REGEXP constant" do
@@ -24,7 +24,7 @@ describe Blinkist::Airbrake::Scrubber::MessageEmail do
   # It's ridiculously hard to peek into Airbrake::Notice
   # Instead verify the functionality here
   describe ".scrub" do
-    let(:filtered)  { Blinkist::Airbrake::Scrubber::FILTERED }
+    let(:filtered)  { Blinkist::AirbrakeScrubber::FILTERED }
     let(:regexp)    { described_class::REGEXP }
 
     let(:valid_domains) { %w{ example.org exam-ple.org exam.ple.org e-xam.ple.org e-xam.p-le.org e.x.a.m.p.l.e.co.uk } }
