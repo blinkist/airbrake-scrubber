@@ -82,12 +82,14 @@ workflows:
   build-and-deploy:
     jobs:
       - build
+        filters:
+          tags:
+            only: /.*/
       - deploy:
         requires:
           - build
         filters:
           tags:
-            only: /.*/
+            only: /^v.*/
           branches:
-            only:
-              - master
+            ignore: /.*/
