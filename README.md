@@ -1,12 +1,12 @@
-# Blinkist::Airbrake::Scrubber
+# Blinkist::AirbrakeScrubber
 
-Blinkist::Airbrake::Scrubber provides an Airbrake scrubbing service to remove various sensitive informations from the notifications, e.g. emails. It does *not* replace Airbrake configuration, but provides some seamless functionality.
+Blinkist::AirbrakeScrubber provides an Airbrake scrubbing service to remove various sensitive informations from the notifications, e.g. emails. It does *not* replace Airbrake configuration, but provides some seamless functionality.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem "blinkist-airbrake-scrubber", "0.0.1", github: "blinkist-airbrake-scrubber", tag: "v0.0.1"
+    gem "blinkist-airbrake-scrubber"
 
 And then execute:
 
@@ -19,7 +19,7 @@ And then execute:
 To extend the functionality, create a new scrubber file in `lib/blinkist-airbrake-scrubber/scrubbers` folder, like the template:
 
 ```ruby
-module Blinkist::Airbrake::Scrubber
+module Blinkist::AirbrakeScrubber
   class WubbaLubba
     REGEXP = /[\S]+@[\S]+/i
 
@@ -34,17 +34,11 @@ module Blinkist::Airbrake::Scrubber
 end
 ```
 
-Then, add the class to Blinkist::Airbrake::Scrubber's SCRUBBERS list to have it ran after Airbrake.configure
-
-### Applications using this gem
-
-There are a few applications available on GitHub that use this gem. For usage see:
-
-* blinkist-messenger
+Then, add the class to Blinkist::AirbrakeScrubber's SCRUBBERS list to have it ran after Airbrake.configure
 
 ### Dependencies
 
-This gem has dependency on airbrake (~> 5), it will automatically add it unless already bundled.
+This gem has dependency on airbrake (~> 7), it will automatically add it unless already bundled.
 
 ## Maintainers
 

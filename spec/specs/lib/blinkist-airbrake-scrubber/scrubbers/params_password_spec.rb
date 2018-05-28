@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Blinkist::Airbrake::Scrubber::ParamsPassword do
+describe Blinkist::AirbrakeScrubber::ParamsPassword do
   let(:notifier) { Airbrake[:default] }
   let(:notice) {
     Airbrake[:default].build_notice(
@@ -23,7 +23,7 @@ describe Blinkist::Airbrake::Scrubber::ParamsPassword do
 
     it "scrubs the password from the params hash" do
       notifier.instance_variable_get(:@filter_chain).refine(notice)
-      expect(notice[:params][:password]).to eq(Blinkist::Airbrake::Scrubber::FILTERED)
+      expect(notice[:params][:password]).to eq(Blinkist::AirbrakeScrubber::FILTERED)
     end
 
     it "scrubs the deep-nested password from the params hash" do
@@ -33,8 +33,8 @@ describe Blinkist::Airbrake::Scrubber::ParamsPassword do
       )
 
       notifier.instance_variable_get(:@filter_chain).refine(notice)
-      expect(notice[:params][:password]).to eq(Blinkist::Airbrake::Scrubber::FILTERED)
-      expect(notice[:params][:deeply][:nested][:password]).to eq(Blinkist::Airbrake::Scrubber::FILTERED)
+      expect(notice[:params][:password]).to eq(Blinkist::AirbrakeScrubber::FILTERED)
+      expect(notice[:params][:deeply][:nested][:password]).to eq(Blinkist::AirbrakeScrubber::FILTERED)
     end
   end
 

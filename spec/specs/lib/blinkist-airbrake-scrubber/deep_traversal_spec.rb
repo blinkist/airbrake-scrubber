@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'blinkist-airbrake-scrubber'
 
-describe Blinkist::Airbrake::Scrubber::DeepTraversal do
+describe Blinkist::AirbrakeScrubber::DeepTraversal do
   subject { described_class.new(source) }
 
   let(:source) { Hash.new }
