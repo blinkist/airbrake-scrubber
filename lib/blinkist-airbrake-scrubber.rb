@@ -19,7 +19,7 @@ module Blinkist
 
     # Override original Airbrake.configure
     def configure(*args, &block)
-      super
+      super(&block)
     ensure
       Blinkist::AirbrakeScrubber.run!
     end
