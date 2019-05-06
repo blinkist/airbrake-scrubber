@@ -15,7 +15,7 @@ end
 module Blinkist
   module AirbrakeScrubber
     FILTERED  = '[Filtered]'
-    SCRUBBERS = [ MessageEmail, ParamsEmail, ParamsPassword ]
+    SCRUBBERS = [ MessageEmail, ParamsEmail, ParamsPassword, ParamsTokens ]
 
     # Override original Airbrake.configure
     def configure(*args, &block)

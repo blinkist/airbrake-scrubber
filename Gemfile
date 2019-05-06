@@ -10,6 +10,7 @@ group :test do
   gem "forgery"
   gem "simplecov"
   gem "dotenv"
+  gem "rspec_junit_formatter"
 end
 
 group :development, :test do

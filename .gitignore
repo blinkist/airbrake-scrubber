@@ -20,3 +20,4 @@ doc/
 dump.rdb
 .byebug_history
 Gemfile.lock
+test_results
