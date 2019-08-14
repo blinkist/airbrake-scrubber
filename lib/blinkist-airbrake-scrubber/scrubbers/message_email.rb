@@ -11,7 +11,7 @@ module Blinkist
       end # def self.scrub!
 
       def self.scrub(message)
-        message.gsub(REGEXP, FILTERED)
+        message.gsub(REGEXP, FILTERED) if message
       end
 
     end
