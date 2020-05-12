@@ -1,91 +1,49 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
-version: 2
+version: 2.1
+orbs:
+  gem: zfhui/ruby-gem@0.0.1.0
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-       - image: circleci/ruby:2.6.5-node-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
+  test-with-ruby-latest:
     working_directory: ~/repo
-
+    executor:
+      name: gem/default
+      tag: latest
     steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "blinkist-airbrake-scrubber.gemspec" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run:
-          name: install dependencies
-          command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
-
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "blinkist-airbrake-scrubber.gemspec" }}
-
-      # Database setup
-      # - run: bundle exec rake db:create
-      # - run: bundle exec rake db:schema:load
-
-      # run tests!
-      - run:
-          name: run tests
-          command: |
-            bundle exec rspec --profile 10 \
-                                  --format RspecJunitFormatter \
-                                  --out test_results/rspec.xml \
-                                  --format progress \
-                                  $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-
-      # collect reports
-      - store_test_results:
-          path: test_results
-      - store_artifacts:
-          path: artifacts
-
-  deploy:
-    docker:
-      - image: circleci/ruby:2.6.5-node-browsers
-
+      - gem/setup-and-test:
+          gemspec: blinkist-airbrake-scrubber.gemspec
+          bundler-version: 2.0.1
+  test-with-ruby-2-3-6:
     working_directory: ~/repo
-
+    executor:
+      name: gem/default
+      tag: 2.3.6
+    steps:
+      - gem/setup-and-test:
+          gemspec: blinkist-airbrake-scrubber.gemspec
+          bundler-version: 1.16.1
+  deploy:
+    working_directory: ~/repo
+    executor:
+      name: gem/default
+      tag: latest
     steps:
       - checkout
       - run:
           name: Setup Rubygems
           command: bash .circleci/setup-rubygems.sh
-
       - run:
           name: Publish to Rubygems
           command: |
             gem build blinkist-airbrake-scrubber.gemspec
             gem push "blinkist-airbrake-scrubber-$(git describe --tags | cut -c2-).gem"
 
-
 workflows:
-  version: 2
-  build-and-deploy:
+  test:
     jobs:
-      - build:
-          filters:
-            tags:
-              only: /.*/
+      - test-with-ruby-latest
+      - test-with-ruby-2-3-6
       - deploy:
           requires:
-            - build
+            - test-with-ruby-latest
           filters:
             tags:
               only: /^v.*/
