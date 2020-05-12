@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Blinkist::AirbrakeScrubber::ParamsPassword do
@@ -17,7 +19,7 @@ describe Blinkist::AirbrakeScrubber::ParamsPassword do
   describe "self.scrub!" do
     it "adds the filter" do
       expect(Airbrake).to receive(:add_filter)
-      described_class::scrub!
+      described_class.scrub!
     end
 
     it "scrubs the password from the params hash" do
@@ -36,5 +38,4 @@ describe Blinkist::AirbrakeScrubber::ParamsPassword do
       expect(notice[:params][:deeply][:nested][:password]).to eq(Blinkist::AirbrakeScrubber::FILTERED)
     end
   end
-
 end

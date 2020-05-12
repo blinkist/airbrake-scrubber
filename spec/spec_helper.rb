@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bundler/setup'
 
 require 'awesome_print'
@@ -14,7 +16,7 @@ require 'blinkist-airbrake-scrubber'
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.color = true
-  config.full_backtrace=true
+  config.full_backtrace = true
 
   config.expect_with :rspec do |expectations|
     expectations.syntax = :expect

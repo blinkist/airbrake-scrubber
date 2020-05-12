@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Blinkist
   module AirbrakeScrubber
     class ParamsEmail
@@ -10,7 +12,7 @@ module Blinkist
           end
           notice
         end
-      end # def self.scrub!
+      end
 
     end
   end

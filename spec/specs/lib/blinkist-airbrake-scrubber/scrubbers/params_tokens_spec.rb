@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Blinkist::AirbrakeScrubber::ParamsTokens do
@@ -17,7 +19,7 @@ describe Blinkist::AirbrakeScrubber::ParamsTokens do
   describe "self.scrub!" do
     it "adds the filter" do
       expect(Airbrake).to receive(:add_filter)
-      described_class::scrub!
+      described_class.scrub!
     end
 
     it "scrubs the google_id_token from the params hash" do
@@ -52,5 +54,4 @@ describe Blinkist::AirbrakeScrubber::ParamsTokens do
       expect(notice[:params][:deeply][:nested][:facebook_access_token]).to eq(Blinkist::AirbrakeScrubber::FILTERED)
     end
   end
-
 end

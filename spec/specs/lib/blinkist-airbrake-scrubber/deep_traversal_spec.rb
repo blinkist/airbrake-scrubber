@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'blinkist-airbrake-scrubber'
 
 describe Blinkist::AirbrakeScrubber::DeepTraversal do
   subject { described_class.new(source) }
 
-  let(:source) { Hash.new }
+  let(:source) { {} }
 
   describe ".traverse" do
     it "calls .recursive_traverse" do
       expect(subject).to receive(:recursive_traverse).with(source)
-      subject.traverse { |k, v| v }
+      subject.traverse { |_k, v| v }
     end
   end
 
@@ -22,7 +24,7 @@ describe Blinkist::AirbrakeScrubber::DeepTraversal do
     end
 
     it "filters out any keys" do
-      returned_object = subject.traverse { |k, v| %w{ email password }.include?(k.to_s) ? '[Filtered]' : v }
+      returned_object = subject.traverse { |k, v| %w[email password].include?(k.to_s) ? '[Filtered]' : v }
       expect(returned_object).to eq({ email: '[Filtered]', password: '[Filtered]', param: true })
     end
   end
@@ -37,20 +39,20 @@ describe Blinkist::AirbrakeScrubber::DeepTraversal do
   end
 
   context "For hashes with arrays" do
-    let(:source) { { email: 'user@example.org', emails: [ { email: 'user@example.org' }, { email: 'user@example.org' } ], whatever: [ nil ] } }
+    let(:source) { { email: 'user@example.org', emails: [{ email: 'user@example.org' }, { email: 'user@example.org' }], whatever: [nil] } }
 
     it "filters out all keys" do
       returned_object = subject.traverse { |k, v| k.to_s == 'email' ? '[Filtered]' : v }
-      expect(returned_object).to eq({ email: '[Filtered]', emails: [ { email: '[Filtered]' }, { email: '[Filtered]' } ], whatever: [ nil ] })
+      expect(returned_object).to eq({ email: '[Filtered]', emails: [{ email: '[Filtered]' }, { email: '[Filtered]' }], whatever: [nil] })
     end
   end
 
   context "For arrays" do
-    let(:source) { [ { email: 'user@example.org' }, { email: 'user@example.org' } ] }
+    let(:source) { [{ email: 'user@example.org' }, { email: 'user@example.org' }] }
 
     it "filters out all keys" do
       returned_object = subject.traverse { |k, v| k.to_s == 'email' ? '[Filtered]' : v }
-      expect(returned_object).to eq([ { email: '[Filtered]' }, { email: '[Filtered]' } ])
+      expect(returned_object).to eq([{ email: '[Filtered]' }, { email: '[Filtered]' }])
     end
   end
 

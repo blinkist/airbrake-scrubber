@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 require 'airbrake'
-Dir[File.expand_path('../../lib/**/*.rb', __FILE__)].each do |f|
+Dir[File.expand_path('../lib/**/*.rb', __dir__)].sort.each do |f|
   require f
 end
 
@@ -15,10 +17,10 @@ end
 module Blinkist
   module AirbrakeScrubber
     FILTERED  = '[Filtered]'
-    SCRUBBERS = [ MessageEmail, ParamsEmail, ParamsPassword, ParamsTokens ]
+    SCRUBBERS = [MessageEmail, ParamsEmail, ParamsPassword, ParamsTokens].freeze
 
     # Override original Airbrake.configure
-    def configure(*args, &block)
+    def configure(*_args, &block)
       super(&block)
     ensure
       Blinkist::AirbrakeScrubber.run!
@@ -26,7 +28,7 @@ module Blinkist
 
     # Run scrubbers
     def self.run!
-      SCRUBBERS.each { |scrubber| scrubber::scrub! }
+      SCRUBBERS.each(&:scrub!)
     end
 
   end
