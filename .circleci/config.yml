@@ -2,11 +2,11 @@ version: 2.1
 orbs:
   gem: zfhui/ruby-gem@0.1.0
 jobs:
-  test-with-ruby-2-6-5:
+  test-with-ruby-latest:
     working_directory: ~/repo
     executor:
       name: gem/default
-      tag: 2.6.5
+      tag: latest
     steps:
       - gem/setup-and-test:
           gemspec: blinkist-airbrake-scrubber.gemspec
@@ -24,7 +24,7 @@ jobs:
     working_directory: ~/repo
     executor:
       name: gem/default
-      tag: 2.6.5
+      tag: latest
     steps:
       - checkout
       - run:
@@ -39,11 +39,11 @@ jobs:
 workflows:
   test:
     jobs:
-      - test-with-ruby-2-6-5
+      - test-with-ruby-latest
       - test-with-ruby-2-3-6
       - deploy:
           requires:
-            - test-with-ruby-2-6-5
+            - test-with-ruby-latest
           filters:
             tags:
               only: /^v.*/
