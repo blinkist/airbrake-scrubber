@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  gem: zfhui/ruby-gem@0.0.1.0
+  gem: zfhui/ruby-gem@0.1.0
 jobs:
   test-with-ruby-latest:
     working_directory: ~/repo
