@@ -28,7 +28,7 @@ module Blinkist::AirbrakeScrubber
         # Rainbows and unicorns come here:
         notice[:errors].each { |error| error[:message].gsub!(REGEXP, FILTERED) }
       end
-    end # def self.scrub!
+    end
 
   end
 end
@@ -42,7 +42,7 @@ This gem has dependency on airbrake (~> 7), it will automatically add it unless 
 
 ## Maintainers
 
-* Paweł Komarnicki (https://github.com/pawelkomarnicki)
+* Blinkist (https://github.com/blinkist)
 
 ## Special thanks
 

@@ -7,8 +7,8 @@ require_relative "lib/blinkist-airbrake-scrubber/version"
 Gem::Specification.new do |gem|
   gem.name          = "blinkist-airbrake-scrubber"
   gem.version       = Blinkist::AirbrakeScrubber::VERSION
-  gem.authors       = ["Paweł Komarnicki", "Dinesh Vasudevan", 'Tomek Przedmojski']
-  gem.email         = ["pawel@blinkist.com", "dinesh@blinkist.com", "tomek@blinkist.com"]
+  gem.authors       = ["Blinkist", "Dinesh Vasudevan", 'Tomek Przedmojski']
+  gem.email         = ["operations@blinkist.com", "dinesh@blinkist.com", "tomek@blinkist.com"]
   gem.description   = 'Email scrubbing configuration for Airbrake at Blinkist'
   gem.summary       = 'With this, Airbrake will not leak emails via exception notifications'
   gem.homepage      = "https://github.com/blinkist/airbrake-scrubber"
