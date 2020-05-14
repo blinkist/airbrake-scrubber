@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  gem: zfhui/ruby-gem@0.1.0
+  gem: zfhui/ruby-gem@0.2.1
 jobs:
   test-with-ruby-latest:
     working_directory: ~/repo
@@ -20,28 +20,22 @@ jobs:
       - gem/setup-and-test:
           gemspec: blinkist-airbrake-scrubber.gemspec
           bundler-version: 1.16.1
-  deploy:
+  build-and-release:
     working_directory: ~/repo
-    executor:
-      name: gem/default
-      tag: latest
+    executor: gem/default
     steps:
-      - checkout
-      - run:
-          name: Setup Rubygems
-          command: bash .circleci/setup-rubygems.sh
-      - run:
-          name: Publish to Rubygems
-          command: |
-            gem build blinkist-airbrake-scrubber.gemspec
-            gem push "blinkist-airbrake-scrubber-$(git describe --tags | cut -c2-).gem"
+      - gem/build:
+          gem-name: blinkist-airbrake-scrubber
+      - gem/release:
+          gem-name: blinkist-airbrake-scrubber
+          gem-credentials-env-name: $RUBYGEMS_API_KEY
 
 workflows:
   test:
     jobs:
       - test-with-ruby-latest
       - test-with-ruby-2-3-6
-      - deploy:
+      - build-and-release:
           requires:
             - test-with-ruby-latest
           filters:
