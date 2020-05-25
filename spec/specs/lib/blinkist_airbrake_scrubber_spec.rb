@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'securerandom'
 require 'blinkist-airbrake-scrubber'
 
 describe Blinkist::AirbrakeScrubber do
   let(:instantiate_airbrake) {
-    Airbrake.configure :"notifier_#{ SecureRandom.uuid }" do |c|
+    Airbrake.configure :"notifier_#{SecureRandom.uuid}" do |c|
       c.project_id  = 1
       c.project_key = 'whatever'
     end
@@ -48,5 +50,4 @@ describe Blinkist::AirbrakeScrubber do
       instantiate_airbrake
     end
   end
-
 end

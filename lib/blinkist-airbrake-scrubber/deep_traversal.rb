@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # DeepTraversal provides traverse possibility of Hashes
 # Can handle Hash objects with deep nesting, or other nested objects that can be dug deeper (e.g. Array)
 module Blinkist
@@ -20,17 +22,15 @@ module Blinkist
           input.map { |i| recursive_traverse(i, &block) }
 
         when Hash
-          Hash[input.map { |key, value|
-
+          Hash[input.map do |key, value|
             # Go deeper for things that are not simple objects
             case value
             when Array, Hash
-              [ key, recursive_traverse(value, &block) ]
+              [key, recursive_traverse(value, &block)]
             else
-              [ key, block.call(key, value) ]
+              [key, block.call(key, value)]
             end
-
-          }]
+          end]
         else
           input
         end
