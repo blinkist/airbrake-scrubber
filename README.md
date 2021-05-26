@@ -1,6 +1,6 @@
 # Blinkist::AirbrakeScrubber
 
-Blinkist::AirbrakeScrubber provides an Airbrake scrubbing service to remove various sensitive informations from the notifications, e.g. emails. It does *not* replace Airbrake configuration, but provides some seamless functionality.
+Blinkist::AirbrakeScrubber provides an Airbrake scrubbing service to remove various sensitive informations from the notifications, e.g. emails. It does _not_ replace Airbrake configuration, but provides some seamless functionality.
 
 ## Installation
 
@@ -38,15 +38,15 @@ Then, add the class to Blinkist::AirbrakeScrubber's SCRUBBERS list to have it ra
 
 ### Dependencies
 
-This gem has dependency on airbrake (~> 7), it will automatically add it unless already bundled.
+This gem has dependency on airbrake (>= 9), it will automatically add it unless already bundled.
 
 ## Maintainers
 
-* Blinkist (https://github.com/blinkist)
+- Blinkist (https://github.com/blinkist)
 
 ## Special thanks
 
-* Tomek Przedmojski (https://github.com/tprzedmojski) for providing a brilliant way to use Module#prepend :-)
+- Tomek Przedmojski (https://github.com/tprzedmojski) for providing a brilliant way to use Module#prepend :-)
 
 ## License
 
