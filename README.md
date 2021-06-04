@@ -50,4 +50,4 @@ This gem has dependency on airbrake (>= 9), it will automatically add it unless 
 
 ## License
 
-Copyright 2018 Blinks Labs GmbH. http://blinkist.com
+Copyright 2021 Blinks Labs GmbH. https://blinkist.com
