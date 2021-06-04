@@ -34,7 +34,7 @@ workflows:
   test:
     jobs:
       - test-with-ruby-latest
-      - test-with-ruby-2-3-6
+      - test-with-ruby-2-3-8
       - build-and-release:
           requires:
             - test-with-ruby-latest
