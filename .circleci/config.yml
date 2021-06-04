@@ -10,16 +10,16 @@ jobs:
     steps:
       - gem/setup-and-test:
           gemspec: blinkist-airbrake-scrubber.gemspec
-          bundler-version: 2.0.1
-  test-with-ruby-2-3-6:
+          bundler-version: 2.2.19
+  test-with-ruby-2-3-8:
     working_directory: ~/repo
     executor:
       name: gem/default
-      tag: 2.3.6
+      tag: 2.3.8
     steps:
       - gem/setup-and-test:
           gemspec: blinkist-airbrake-scrubber.gemspec
-          bundler-version: 1.16.1
+          bundler-version: 1.17.3
   build-and-release:
     working_directory: ~/repo
     executor: gem/default
@@ -34,7 +34,7 @@ workflows:
   test:
     jobs:
       - test-with-ruby-latest
-      - test-with-ruby-2-3-6
+      - test-with-ruby-2-3-8
       - build-and-release:
           requires:
             - test-with-ruby-latest
