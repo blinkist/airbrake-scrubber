@@ -29,7 +29,46 @@ jobs:
       - gem/release:
           gem-name: blinkist-airbrake-scrubber
           gem-credentials-env-name: $RUBYGEMS_API_KEY
+  license-check:
+    resource_class: small
+    working_directory: ~/app
+    docker:
+      - image: cimg/ruby:2.7.2
 
+    steps:
+      - checkout
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - bundle-cache-{{ checksum "Gemfile.lock" }}
+            - bundle-cache-
+
+      - run:
+          name: Bundle Install
+          command: |
+            gem install bundler:2.2.26
+            bundle config set path "vendor/bundle" && bundle config set clean "true"
+            bundle check || bundle install
+      # Store bundle cache
+      - save_cache:
+          key: bundle-cache-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Clone github tooling
+          command: git clone --depth=1 git@github.com:blinkist/github-tooling.git
+
+      - run:
+          name: "Copy License configuration file"
+          command: |
+            mkdir docs
+            cp github-tooling/data/general-license-allowlist.yml docs/dependency_decisions.yml
+      - run:
+          name: run license_finder
+          # Fails the build if new unapproved licenses are found
+          command: bundle exec license_finder --decisions_file docs/dependency_decisions.yml
 workflows:
   test:
     jobs:
