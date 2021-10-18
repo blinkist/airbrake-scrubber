@@ -72,6 +72,8 @@ jobs:
 workflows:
   test:
     jobs:
+      - license-check:
+          context: Github
       - test-with-ruby-latest
       - test-with-ruby-2-3-8
       - build-and-release:
