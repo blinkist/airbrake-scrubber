@@ -40,4 +40,8 @@ workflows:
             - test-with-ruby-latest
           filters:
             tags:
-              only: /^v.*/
+              only:
+                - /^v.*/
+            branches:
+              only:
+                - main
