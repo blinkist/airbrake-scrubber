@@ -7,11 +7,11 @@ describe Blinkist::AirbrakeScrubber::VERSION do
   it 'provides the current version' do
     version = Blinkist::AirbrakeScrubber::VERSION
     expect(version).to_not be nil
-    expect(version.instance_of?(String)).to be true
+    expect(version).to be_a String
   end
 
-  it 'equals 4.4.0 for auto-check purposes' do
+  it 'equals 5.0.0 for auto-check purposes' do
     version = Blinkist::AirbrakeScrubber::VERSION
-    expect(version).to eq '4.4.0'
+    expect(version).to eq '5.0.0'
   end
 end

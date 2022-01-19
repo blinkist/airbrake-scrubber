@@ -14,8 +14,8 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/blinkist/airbrake-scrubber"
   gem.license       = "MIT"
 
-  # Airbrake
-  gem.add_dependency "airbrake", ">= 9", "< 12"
+  # https://github.com/airbrake/airbrake
+  gem.add_dependency "airbrake", ">= 9", "< 14"
 
   gem.files         = Dir["{lib,spec}/**/*", "README.md", "Rakefile", "Gemfile", "*.gemspec"]
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
